@@ -1,0 +1,5 @@
+Titulo+Autor+Categoria+Ano+ISBN
+Harry Potter e a Regressao Linear+Joana Rolante+800+2011+123-0000011111
+Transformers+Jaime+600+2015+456-4444455555
+TRANSISTOR+Jaime+600+2016+456-4444455555
+MERDA+Jaime+800+2016+456-4444455555
