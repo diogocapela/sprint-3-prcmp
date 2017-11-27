@@ -1,0 +1,43 @@
+#!/bin/bash
+
+if [ "$#" -gt "0" ]
+then
+ i=0
+
+ for pasta in "$@"
+ do
+
+  if [ $(find -perm -u+rw -type d -path "*$pasta" | wc -l) -gt 0 ]
+  then
+
+   i=$(($i+1))
+   for file in $(find -maxdepth 2 -type f -path "*$pasta/*.mp3" -mtime -6)
+   do
+
+    #ex4
+    for file2 in $(find -maxdepth 2 -type f -path "*$pasta/*mp3" -ctime -3)
+    do
+     if [ "$file" = "$file2" ]
+     then #falta cortar o path do nome do ficheiro
+      echo "$file2 | $pasta/"
+     fi
+    done
+
+    mkdir /tmp/MusicasRecentes && mv $file /tmp/MusicasRecentes/ || mv $file /tmp/MusicasRecentes/
+
+   done
+
+  fi
+
+ done
+
+ if [ "$i" -eq "0" ]
+ then
+  echo "Nenhum diretorio fornecido é acessivel."
+ fi
+
+else
+ echo "Preciso de pelo menos um diretorio."
+fi
+
+exit
