@@ -1,0 +1,22 @@
+#!/bin/bash
+
+if [ "$#" -eq 1 ]
+then
+ count="$(find -perm -u+rw -type d -path "*/$1" | wc -l)"
+ if [ $count -gt 1 ]
+ then
+  echo "O parâmetro fornecido corresponde a mais de um diretório"
+ elif [ $count -eq 1 ]
+ then
+  for dir in "$(find -perm -u+rw -type d -path "*/$1")"
+  do
+   ls -l "$dir" | tr -s " " | cut -d " " -f1,3,9 | awk 'NR>1'
+  done
+ else
+  echo "Diretório fornecido não é acessível"
+ fi
+else
+ echo "Apenas posso receber um diretório/parâmetro"
+fi
+
+exit
