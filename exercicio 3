@@ -1,0 +1,35 @@
+#!/bin/bash
+
+clear
+
+if [ "$#" -gt "0" ]
+then
+ i=0
+
+ for pasta in "$@"
+ do
+  if [ $(find -perm -u+rw -type d -path "*$pasta" | wc -l) -gt 0 ]
+  then
+   i=$(($i+1))
+   for file in $(find -maxdepth 2 -type f -path "*$pasta/*.mp3")
+   do
+    if [ $(find -type d -path "/tmp/MusicaRecentes" | wc -l) -gt 0 ]
+    then
+     mv $file /tmp/MusicasRecentes/
+    else
+     mkdir /tmp/MusicasRecentes
+     mv $file /tmp/MusicasRecentes/
+    fi
+   done
+  fi
+ done
+
+ if [ "$i" -eq "0" ]
+ then
+  echo "Nenhum diretorio fornecido é acessivel."
+ fi
+else
+ echo "Preciso de pelo menos um diretorio."
+fi
+
+exit 0
